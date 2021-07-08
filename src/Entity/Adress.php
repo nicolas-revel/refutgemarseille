@@ -20,7 +20,7 @@ class Adress
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="adresses")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="adresses")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

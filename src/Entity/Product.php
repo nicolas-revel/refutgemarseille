@@ -3,12 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @Vich\Uploadable
  */
 class Product
 {
@@ -30,7 +35,7 @@ class Product
     private $slug;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $releasedAt;
 
@@ -40,7 +45,7 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float", length=255)
      */
     private $price;
 
@@ -50,9 +55,21 @@ class Product
     private $image1;
 
     /**
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image1")
+     * @var File $image1File
+     */
+    private $image1File;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image2;
+
+    /**
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image2")
+     * @var File $image2File
+     */
+    private $image2File;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -60,18 +77,24 @@ class Product
     private $image3;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image3")
+     * @var File $image3File
+     */
+    private $image3File;
+
+    /**
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=category::class, inversedBy="products")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity=tag::class, inversedBy="products")
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="products")
      */
     private $tags;
 
@@ -95,6 +118,16 @@ class Product
      */
     private $cartHasProducts;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $stock;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -105,18 +138,6 @@ class Product
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdProduct(): ?int
-    {
-        return $this->idProduct;
-    }
-
-    public function setIdProduct(int $idProduct): self
-    {
-        $this->idProduct = $idProduct;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -143,12 +164,12 @@ class Product
         return $this;
     }
 
-    public function getReleasedAt(): ?\DateTimeImmutable
+    public function getReleasedAt(): ?\DateTime
     {
         return $this->releasedAt;
     }
 
-    public function setReleasedAt(\DateTimeImmutable $releasedAt): self
+    public function setReleasedAt(\DateTime $releasedAt): self
     {
         $this->releasedAt = $releasedAt;
 
@@ -167,12 +188,12 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(string $price): self
+    public function setPrice(float $price): self
     {
         $this->price = $price;
 
@@ -184,7 +205,7 @@ class Product
         return $this->image1;
     }
 
-    public function setImage1(string $image1): self
+    public function setImage1(?string $image1): self
     {
         $this->image1 = $image1;
 
@@ -215,12 +236,12 @@ class Product
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -331,6 +352,98 @@ class Product
                 $cartHasProduct->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return ?File
+     */
+    public function getImage1File (): ?File
+    {
+        return $this->image1File;
+    }
+
+    /**
+     * @param File $image1File
+     * @return Product
+     */
+    public function setImage1File (?File $image1File): Product
+    {
+        $this->image1File = $image1File;
+        if ($image1File) {
+            $this->updatedAt = new DateTime();
+        }
+        return $this;
+    }
+
+    /**
+     * @return ?File
+     */
+    public function getImage2File (): ?File
+    {
+        return $this->image2File;
+    }
+
+    /**
+     * @param File $image2File
+     * @return Product
+     */
+    public function setImage2File (?File $image2File): Product
+    {
+        $this->image2File = $image2File;
+        if ($image2File) {
+            $this->updatedAt = new DateTime();
+        }
+        return $this;
+    }
+
+    /**
+     * @return ?File
+     */
+    public function getImage3File (): ?File
+    {
+        return $this->image3File;
+    }
+
+    /**
+     * @param File $image3File
+     * @return Product
+     */
+    public function setImage3File (?File $image3File): Product
+    {
+        $this->image3File = $image3File;
+        if ($image3File) {
+            $this->updatedAt = new DateTime();
+        }
+        return $this;
+    }
+
+    public function __toString ()
+    {
+        return $this->getName();
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): self
+    {
+        $this->stock = $stock;
 
         return $this;
     }
