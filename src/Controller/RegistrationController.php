@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Security;
+namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Security\EmailVerifier;
+use DateTimeImmutable;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +41,10 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+            if (empty($this->getDoctrine()->getRepository("App:User")->findAll())) {
+                $user->setRoles(["ROLE_ADMIN"]);
+            }
+            $user->setCreatedAt(new DateTimeImmutable());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

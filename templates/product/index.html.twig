@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shop - Le Re[fût]ge{% endblock %}
+
+{% block body %}
+    {% for product in products %}
+        <p>{{ product.name }}</p>
+    {% endfor %}
+
+    {{ knp_pagination_render(products) }}
+{% endblock %}

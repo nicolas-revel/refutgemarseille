@@ -18,13 +18,13 @@ class OrderHasProduct
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=order::class, inversedBy="product")
+     * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="orderHasProducts")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $id_order;
+    private $order;
 
     /**
-     * @ORM\ManyToOne(targetEntity=product::class, inversedBy="orderHasProducts")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="orderHasProducts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
@@ -46,12 +46,12 @@ class OrderHasProduct
 
     public function getIdOrder(): ?order
     {
-        return $this->id_order;
+        return $this->order;
     }
 
-    public function setIdOrder(?order $id_order): self
+    public function setIdOrder(?order $order): self
     {
-        $this->id_order = $id_order;
+        $this->order = $order;
 
         return $this;
     }

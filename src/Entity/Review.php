@@ -18,12 +18,12 @@ class Review
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=user::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
      */
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity=product::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Product::class, cascade={"persist", "remove"})
      */
     private $product;
 
@@ -38,7 +38,7 @@ class Review
     private $content;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
@@ -100,12 +100,12 @@ class Review
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 

@@ -21,13 +21,13 @@ class Order
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=adress::class, inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity=Adress::class, inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      */
     private $adress;
@@ -48,7 +48,7 @@ class Order
     private $totalAmount;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderHasProduct::class, mappedBy="id_order")
+     * @ORM\OneToMany(targetEntity=OrderHasProduct::class, mappedBy="order")
      */
     private $orderHasProducts
     ;
