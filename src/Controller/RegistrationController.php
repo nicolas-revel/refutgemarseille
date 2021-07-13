@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
+use DateTime;
 use DateTimeImmutable;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +21,7 @@ class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct (EmailVerifier $emailVerifier)
     {
         $this->emailVerifier = $emailVerifier;
     }
@@ -27,7 +29,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder): Response
+    public function register (Request $request, UserPasswordHasherInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -44,9 +46,14 @@ class RegistrationController extends AbstractController
             if (empty($this->getDoctrine()->getRepository("App:User")->findAll())) {
                 $user->setRoles(["ROLE_ADMIN"]);
             }
-            $user->setCreatedAt(new DateTimeImmutable());
+            $user->setCreatedAt(new DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            if (empty($this->getDoctrine()->getRepository('App:Cart')->findOneBy(["user" => $user->getId()]))) {
+                $cart = new Cart();
+                $cart->setUser($user)->setCreatedAt(new DateTime());
+                $entityManager->persist($cart);
+            }
             $entityManager->flush();
 
             // generate a signed url and email it to the user
@@ -70,7 +77,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/verify/email", name="app_verify_email")
      */
-    public function verifyUserEmail(Request $request): Response
+    public function verifyUserEmail (Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 

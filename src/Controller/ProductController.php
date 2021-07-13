@@ -2,84 +2,65 @@
 
 namespace App\Controller;
 
+use App\Entity\ProductSearch;
+use App\Entity\User;
+use App\Form\ProductSearchType;
+use App\Form\ProductToCartType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class ProductController
+ * @package App\Controller
+ */
+
 class ProductController extends AbstractController
 {
-
-    /**
-     * @var ProductRepository
-     */
-    private ProductRepository $repository;
-
-    private ObjectManager $entityManager;
-
-    /**
-     * ProductController constructor.
-     * @param ProductRepository $repository
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct (ProductRepository $repository, EntityManagerInterface $entityManager)
-    {
-        $this->repository = $repository;
-        $this->entityManager = $entityManager;
-    }
-
     /**
      * @Route("/shop", name="product")
      */
     public function index (PaginatorInterface $paginator, Request $request): Response
     {
+        $search = new ProductSearch();
+        $form = $this->createForm(ProductSearchType::class, $search);
+        $form->handleRequest($request);
         $products = $paginator->paginate(
-            $this->getRepository()->findReleased(),
+            $this->getDoctrine()->getRepository("App:Product")->findAllFiltered($search),
             $request->query->getInt("page", 1),
             20
         );
-        dump($products);
-        return $this->render('product/index.html.twig', [
+        return $this->render('product/shop.html.twig', [
             'controller_name' => 'ProductController',
             'products' => $products,
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @return ProductRepository
+     * @Route("/shop/{slug}", name="product_path")
+     *
+     * @param string $slug
+     * @param Request $request
+     * @return Response
      */
-    public function getRepository (): ProductRepository
+    public function show(string $slug, Request $request) : Response
     {
-        return $this->repository;
-    }
-
-    /**
-     * @param ProductRepository $repository
-     */
-    public function setRepository (ProductRepository $repository): ProductController
-    {
-        $this->repository = $repository;
-        return $this;
-    }
-
-    /**
-     * @return ObjectManager
-     */
-    public function getEntityManager (): ObjectManager
-    {
-        return $this->entityManager;
-    }
-
-    /**
-     * @param ObjectManager $entityManager
-     */
-    public function setEntityManager (ObjectManager $entityManager): ProductController
-    {
-        $this->entityManager = $entityManager;
-        return $this;
+        $user = $this->getUser();
+        $cart = $this->getDoctrine()->getRepository("App:Cart")->findOneBy(['user' => 64]);
+        dd($cart);
+        $product = $this->getDoctrine()->getRepository("App:Product")->findOneBy(['slug' => $slug]);
+        $cart_form = $this->createForm(ProductToCartType::class, $product);
+        $cart_form->handleRequest($request);
+        return $this->render("product/show.html.twig", [
+            "product" => $product,
+            "cart_form" => $cart_form->createView(),
+        ]);
     }
 }

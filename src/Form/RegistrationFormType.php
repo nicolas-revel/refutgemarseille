@@ -23,7 +23,9 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class)
             ->add("firstname", TextType::class)
             ->add("lastname", TextType::class)
-            ->add("birthdate", DateType::class)
+            ->add("birthdate", DateType::class, [
+                'widget' => 'single_text',
+            ])
             ->add("phoneNumber", TextType::class)
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
