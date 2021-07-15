@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\CartHasProduct;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,7 +13,16 @@ class ProductToCartType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('quantity')
+            ->add('quantity', NumberType::class, [
+                "label"=> false,
+                "html5" => true,
+                "required" => true,
+                "scale" => 0,
+                "attr"=> [
+                    "placeholder" => "Quantité"
+                ]
+
+            ])
         ;
     }
 

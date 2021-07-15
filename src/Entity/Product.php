@@ -99,16 +99,6 @@ class Product
     private $tags;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Sale::class, inversedBy="orderHasProducts")
-     */
-    private $sale;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Cart::class, mappedBy="orderHasProducts")
-     */
-    private $carts;
-
-    /**
      * @ORM\OneToMany(targetEntity=OrderHasProduct::class, mappedBy="product")
      */
     private $orderHasProducts;
@@ -132,6 +122,11 @@ class Product
      * @ORM\OneToMany(targetEntity=Review::class, mappedBy="product", orphanRemoval=true)
      */
     private $reviews;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Sale::class, inversedBy="product")
+     */
+    private $sale;
 
     public function __construct()
     {
@@ -286,18 +281,6 @@ class Product
     public function removeTag(tag $tag): self
     {
         $this->tags->removeElement($tag);
-
-        return $this;
-    }
-
-    public function getSale(): ?Sale
-    {
-        return $this->sale;
-    }
-
-    public function setSale(?Sale $sale): self
-    {
-        $this->sale = $sale;
 
         return $this;
     }
@@ -480,6 +463,18 @@ class Product
                 $review->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSale(): ?Sale
+    {
+        return $this->sale;
+    }
+
+    public function setSale(?Sale $sale): self
+    {
+        $this->sale = $sale;
 
         return $this;
     }

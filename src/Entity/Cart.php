@@ -21,12 +21,6 @@ class Cart
     private ?int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="cart", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private ?user $user;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private ?DateTime $createdAt;
@@ -41,6 +35,12 @@ class Cart
      */
     private $cartHasProducts;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="cart", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function __construct()
     {
         $this->cartHasProducts = new ArrayCollection();
@@ -49,18 +49,6 @@ class Cart
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUser(): ?user
-    {
-        return $this->user;
-    }
-
-    public function setUser(user $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function getCreatedAt(): ?\DateTime
@@ -113,6 +101,18 @@ class Cart
                 $cartHasProduct->setCart(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

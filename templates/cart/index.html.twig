@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre Panier - Le Re[fût]ge{% endblock %}
+
+{% block body %}
+    {% if (cartHasProduct) %}
+        {% for cartProduct in cartHasProduct %}
+            <div>
+                <p><a href="{{ path('product_path', {'slug': cartProduct.slug}) }}">{{ cartProduct.product }}</a></p>
+                <img src="/uploads/images/products/{{ cartProduct.image }}" alt="{{ cartProduct.product }}" height="100px">
+                <p>Catégorie : {{ cartProduct.category }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
