@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Tag;
+use App\Form\Tag;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;

@@ -23,11 +23,6 @@ class Review
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity=Product::class, cascade={"persist", "remove"})
-     */
-    private $product;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -47,6 +42,12 @@ class Review
      */
     private $stars;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,18 +61,6 @@ class Review
     public function setUser(?user $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getProduct(): ?product
-    {
-        return $this->product;
-    }
-
-    public function setProduct(?product $product): self
-    {
-        $this->product = $product;
 
         return $this;
     }
@@ -120,6 +109,18 @@ class Review
     public function setStars(int $stars): self
     {
         $this->stars = $stars;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

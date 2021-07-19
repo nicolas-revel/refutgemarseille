@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\CartHasProductRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CartHasProductRepository::class)
@@ -18,13 +20,13 @@ class CartHasProduct
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=cart::class, inversedBy="cartHasProducts")
+     * @ORM\ManyToOne(targetEntity=Cart::class, inversedBy="cartHasProducts", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $cart;
 
     /**
-     * @ORM\ManyToOne(targetEntity=product::class, inversedBy="cartHasProducts")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="cartHasProducts", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
@@ -35,9 +37,34 @@ class CartHasProduct
     private $quantity;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float", length=255)
      */
     private $amount;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private DateTime $updatedAt;
 
     public function getId(): ?int
     {
@@ -80,15 +107,81 @@ class CartHasProduct
         return $this;
     }
 
-    public function getAmount(): ?string
+    public function getAmount(): ?float
     {
         return $this->amount;
     }
 
-    public function setAmount(string $amount): self
+    public function setAmount(float $amount): self
     {
         $this->amount = $amount;
 
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt (): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTime $updatedAt
+     * @return CartHasProduct
+     */
+    public function setUpdatedAt (DateTime $updatedAt): CartHasProduct
+    {
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 }

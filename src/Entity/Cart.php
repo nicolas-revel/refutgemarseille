@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CartRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,28 +18,28 @@ class Cart
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private ?DateTime $createdAt;
+
+    /**
+     * @ORM\Column(type="float", length=255, nullable=true)
+     */
+    private ?float $totalAmount;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CartHasProduct::class, mappedBy="cart", orphanRemoval=true)
+     */
+    private $cartHasProducts;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="cart", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $totatAmount;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CartHasProduct::class, mappedBy="cart")
-     */
-    private $cartHasProducts;
 
     public function __construct()
     {
@@ -50,38 +51,26 @@ class Cart
         return $this->id;
     }
 
-    public function getUser(): ?user
-    {
-        return $this->user;
-    }
-
-    public function setUser(user $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getTotatAmount(): ?string
+    public function getTotalAmount(): ?float
     {
-        return $this->totatAmount;
+        return $this->totalAmount;
     }
 
-    public function setTotatAmount(string $totatAmount): self
+    public function setTotalAmount(float $totalAmount): self
     {
-        $this->totatAmount = $totatAmount;
+        $this->totalAmount = $totalAmount;
 
         return $this;
     }
@@ -112,6 +101,18 @@ class Cart
                 $cartHasProduct->setCart(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

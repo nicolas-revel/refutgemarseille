@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Entity\ProductSearch;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -21,16 +22,30 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    /**
-     * @return Query returns an array of latest released products
-     */
-    public function findReleased (): Query
+    public function findAllFiltered (ProductSearch $search): Query
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.releasedAt < :now')
-            ->orderBy('p.releasedAt', 'ASC')
-            ->setParameter(':now', new DateTime())
-            ->getQuery();
+        $query = $this->createQueryBuilder("p");
+        if ($search->getQuery()) {
+            $query->andWhere("p.name LIKE :query")
+                ->setParameter(":query", "%" . $search->getQuery() . "%");
+        }
+        if ($search->getPreorder()) {
+            $query->andWhere("p.releasedAt > :now")
+                ->setParameter(":now", new DateTime());
+        }
+        if ($search->getCategories()->getValues()) {
+            $query->innerJoin("p.category", "c")
+                ->select("p", "c")
+                ->andWhere("c.id IN (:categories)")
+                ->setParameter(":categories", $search->getCategories());
+        }
+        if ($search->getTags()->getValues()) {
+            $query->innerJoin("p.tags", "t")
+                ->select("p", "t")
+                ->andWhere("t.id IN (:tags)")
+                ->setParameter(":tags", $search->getTags());
+        }
+        return $query->getQuery();
     }
 
 }

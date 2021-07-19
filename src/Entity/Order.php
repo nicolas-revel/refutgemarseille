@@ -21,12 +21,6 @@ class Order
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Adress::class, inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -53,6 +47,12 @@ class Order
     private $orderHasProducts
     ;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
 
     public function __construct()
     {
@@ -62,18 +62,6 @@ class Order
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUser(): ?user
-    {
-        return $this->user;
-    }
-
-    public function setUser(?user $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function getAdress(): ?adress
@@ -150,6 +138,18 @@ class Order
                 $product->setIdOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

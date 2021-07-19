@@ -18,13 +18,13 @@ class OrderHasProduct
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="orderHasProducts")
+     * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="orderHasProducts", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $order;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="orderHasProducts")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="orderHasProducts", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;

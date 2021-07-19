@@ -53,7 +53,6 @@ class DashboardController extends AbstractDashboardController
 
             MenuItem::section("Boutique", "fa fa-euro"),
             MenuItem::linkToCrud("Produits", "fa fa-beer", Product::class),
-            MenuItem::linkToCrud("Stocks", "fa fa-boxes", Stock::class),
             MenuItem::linkToCrud("Commandes", "fa fa-truck", Order::class),
             MenuItem::linkToCrud("Catégories", "fa fa-sitemap", Category::class),
             MenuItem::linkToCrud("Hashtags", "fa fa-hashtag", Tag::class)

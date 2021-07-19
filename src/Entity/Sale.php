@@ -20,11 +20,6 @@ class Sale
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=product::class, mappedBy="sale")
-     */
-    private $product;
-
-    /**
      * @ORM\Column(type="datetime_immutable")
      */
     private $startAt;
@@ -39,6 +34,11 @@ class Sale
      */
     private $createdAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="sale")
+     */
+    private $product;
+
     public function __construct()
     {
         $this->product = new ArrayCollection();
@@ -47,36 +47,6 @@ class Sale
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection|product[]
-     */
-    public function getProduct(): Collection
-    {
-        return $this->product;
-    }
-
-    public function addProduct(product $product): self
-    {
-        if (!$this->product->contains($product)) {
-            $this->product[] = $product;
-            $product->setSale($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(product $product): self
-    {
-        if ($this->product->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getSale() === $this) {
-                $product->setSale(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getStartAt(): ?\DateTime
@@ -111,6 +81,36 @@ class Sale
     public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProduct(): Collection
+    {
+        return $this->product;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->product->contains($product)) {
+            $this->product[] = $product;
+            $product->setSale($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->product->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getSale() === $this) {
+                $product->setSale(null);
+            }
+        }
 
         return $this;
     }

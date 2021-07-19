@@ -45,7 +45,7 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="float", length=255)
+     * @ORM\Column(type="decimal", precision=7, scale=2)
      */
     private $price;
 
@@ -99,16 +99,6 @@ class Product
     private $tags;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Sale::class, inversedBy="orderHasProducts")
-     */
-    private $sale;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Cart::class, mappedBy="orderHasProducts")
-     */
-    private $carts;
-
-    /**
      * @ORM\OneToMany(targetEntity=OrderHasProduct::class, mappedBy="product")
      */
     private $orderHasProducts;
@@ -128,11 +118,22 @@ class Product
      */
     private $stock;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="product", orphanRemoval=true)
+     */
+    private $reviews;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Sale::class, inversedBy="product")
+     */
+    private $sale;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->orderHasProducts = new ArrayCollection();
         $this->cartHasProducts = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,12 +189,12 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): ?string
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice(string $price): self
     {
         $this->price = $price;
 
@@ -280,18 +281,6 @@ class Product
     public function removeTag(tag $tag): self
     {
         $this->tags->removeElement($tag);
-
-        return $this;
-    }
-
-    public function getSale(): ?Sale
-    {
-        return $this->sale;
-    }
-
-    public function setSale(?Sale $sale): self
-    {
-        $this->sale = $sale;
 
         return $this;
     }
@@ -444,6 +433,48 @@ class Product
     public function setStock(int $stock): self
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getProduct() === $this) {
+                $review->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSale(): ?Sale
+    {
+        return $this->sale;
+    }
+
+    public function setSale(?Sale $sale): self
+    {
+        $this->sale = $sale;
 
         return $this;
     }

@@ -6,6 +6,7 @@ use App\Repository\AdressRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AdressRepository::class)
@@ -47,6 +48,11 @@ class Adress
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex(
+     *     pattern="/^(^[0-9]+).*$/",
+     *     match=false,
+     *     message="Merci de ne pas inscrire de numéros"
+     * )
      */
     private $street;
 
@@ -62,6 +68,7 @@ class Adress
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive()
      */
     private $number;
 
