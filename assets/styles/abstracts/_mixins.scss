@@ -1,0 +1,143 @@
+@mixin heading($type, $color) {
+  font-family: 'Anton', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  color: $color;
+  @if ($type == "h1") {
+    font-size: 72px;
+  }
+  @else if($type == "h2") {
+    font-size: 60px;
+  }
+  @else if($type == "h3") {
+    font-size: 48px;
+  }
+  @else if($type == "h4") {
+    font-size: 36px;
+  }
+  @else if($type == "h5") {
+    font-size: 30px;
+  }
+  @else if($type == "h6") {
+    font-size: 24px;
+  }
+}
+
+@mixin text($size) {
+  font-family: 'Cutive', serif;
+  font-style: normal;
+  font-weight: normal;
+  @if ($size == "XXL") {
+    font-size: 24px;
+  }
+  @else if($size == "XL") {
+    font-size: 20px;
+  }
+  @else if($size == "L") {
+    font-size: 18px;
+  }
+  @else if($size == "M") {
+    font-size: 16px;
+  }
+  @else if($size == "S") {
+    font-size: 14px;
+  }
+  @else if($size == "XS") {
+    font-size: 12px;
+  }
+}
+
+@mixin alternatText($size) {
+  font-family: 'Raleway', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  @if ($size == "XXL") {
+    font-size: 24px;
+  }
+  @else if($size == "XL") {
+    font-size: 20px;
+  }
+  @else if($size == "L") {
+    font-size: 18px;
+  }
+  @else if($size == "M") {
+    font-size: 16px;
+  }
+  @else if($size == "S") {
+    font-size: 14px;
+  }
+  @else if($size == "XS") {
+    font-size: 12px;
+  }
+}
+
+@mixin button($size, $color, $outline: 'false'){
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  @if($size == "small") {
+    padding: 5px 15px;
+  } @else if($size == "medium") {
+    padding: 10px 20px;
+  } @else if($size == "big") {
+    padding: 20px 30px;
+  }
+  @if($outline == "false") {
+    border: none;
+    color: $gray-100;
+    @if($color == "primary") {
+      background-color: $primary-regular;
+    } @else if($color == "secondary") {
+      background-color: $secondary-regular;
+    } @else if($color == "danger") {
+      background-color: $danger-light;
+    } @else if($color == "alert") {
+      background-color: $alert-light;
+    } @else if($color == "success") {
+      background-color: $success-light;
+    }
+  } @else if($outline == "true") {
+    background-color: $gray-100;
+    @if($color == "primary") {
+      color: $primary-regular;
+      border: solid 2px $primary-light;
+    } @else if($color == "secondary") {
+      color: $secondary-darker;
+      border: solid 2px $secondary-regular;
+    } @else if($color == "danger") {
+      color: $danger-dark;
+      border: solid 2px $danger-lighter;
+    } @else if($color == "alert") {
+      color: $alert-dark;
+      border: solid 2px $alert-lighter;
+    } @else if($color == "success") {
+      color: $success-dark;
+      border: solid 2px $success-lighter;
+    }
+  }
+}
+
+@mixin shadow($type) {
+  @if ($type == "lighter") {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.24), 0px 1px 3px rgba(0, 0, 0, 0.12);
+  } @else if ($type == "light") {
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.12), 0px 3px 6px rgba(0, 0, 0, 0.15);
+  } @else if ($type == "regular") {
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.15);
+  } @else if ($type == "dark") {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 25px rgba(0, 0, 0, 0.15);
+  } @else if ($type == "darker") {
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@mixin effect($type) {
+  @if ($type == "hover") {
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.25);
+  } @else if ($type == "inner") {
+    box-shadow: inset 4px 4px 3px rgba(0, 0, 0, 0.25);
+  }
+}

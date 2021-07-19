@@ -1,0 +1,56 @@
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  background-color: $secondary-regular;
+  padding: 0 2%;
+  #home {
+    width: 210px;
+  }
+  .header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    #home-link {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      #home-title {
+        @include text('XL');
+        padding-top: 10px;
+        color: $primary-dark;
+      }
+      #home-logo {
+        height: 65px;
+      }
+    }
+    a {
+      @include text("M");
+      text-decoration: none;
+      color: $primary-regular;
+    }
+  }
+  nav{
+    width: 30%;
+  }
+  #btn-container {
+    width: 300px;
+    p {
+      margin-left: 10px;
+    }
+    .contact-btn {
+      @include button("medium", "primary");
+      @include alternatText("M");
+
+    }
+    .cart-btn {
+      @include button("medium", "primary", "true");
+      @include alternatText("M");
+    }
+  }
+}
