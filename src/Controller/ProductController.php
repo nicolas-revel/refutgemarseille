@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Exception\ValidatorException;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/shop", name="product")
+     * @Route("/shop", name="shop")
      */
     public function index (PaginatorInterface $paginator, Request $request): Response
     {
@@ -92,6 +92,7 @@ class ProductController extends AbstractController
                     ->setSlug($product->getSlug());
                 $this->getDoctrine()->getManager()->persist($cartRow);
                 $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute("shop");
             }
         }
         return $this->render("product/show.html.twig", [

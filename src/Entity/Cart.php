@@ -28,10 +28,10 @@ class Cart
     /**
      * @ORM\Column(type="float", length=255, nullable=true)
      */
-    private ?string $totalAmount;
+    private ?float $totalAmount;
 
     /**
-     * @ORM\OneToMany(targetEntity=CartHasProduct::class, mappedBy="cart")
+     * @ORM\OneToMany(targetEntity=CartHasProduct::class, mappedBy="cart", orphanRemoval=true)
      */
     private $cartHasProducts;
 
@@ -63,14 +63,14 @@ class Cart
         return $this;
     }
 
-    public function getTotatAmount(): ?string
+    public function getTotalAmount(): ?float
     {
-        return $this->totatAmount;
+        return $this->totalAmount;
     }
 
-    public function setTotatAmount(string $totatAmount): self
+    public function setTotalAmount(float $totalAmount): self
     {
-        $this->totatAmount = $totatAmount;
+        $this->totalAmount = $totalAmount;
 
         return $this;
     }

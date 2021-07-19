@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -53,7 +54,7 @@ class ProductCrudController extends AbstractCrudController
             SlugField::new("slug", "Slug")->setTargetFieldName("name")->hideOnIndex(),
             DateTimeField::new("released_at", "Date de sortie")->setValue("now")->setRequired(true),
             TextEditorField::new("description","Description"),
-            MoneyField::new("price", "Prix")->setCurrency("EUR"),
+            NumberField::new("price", "Prix")->setNumDecimals(2),
             IntegerField::new("stock", "Stocks"),
             TextField::new("image1File", "Image 1")->setFormType(VichImageType::class)->hideOnIndex(),
             ImageField::new('image1')->setBasePath('/uploads/images/products')->onlyOnIndex(),

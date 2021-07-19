@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Informations de facturation - Re[fût]ge
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form_adress) }}
+    {{ form_row(form_adress.title) }}
+    {{ form_row(form_adress.country) }}
+    {{ form_row(form_adress.city) }}
+    {{ form_row(form_adress.postalCode) }}
+    {{ form_row(form_adress.street) }}
+    {{ form_row(form_adress.optionnal1) }}
+    {{ form_row(form_adress.optionnal2) }}
+    {{ form_row(form_adress.number) }}
+    {{ form_end(form_adress) }}
+{% endblock %}
+
+
+

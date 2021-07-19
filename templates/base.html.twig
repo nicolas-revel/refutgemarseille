@@ -6,14 +6,26 @@
     {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
     {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+              crossorigin="anonymous">
         {# {{ encore_entry_link_tags('app') }} #}
     {% endblock %}
 
-    {% block javascripts %}
-        {# {{ encore_entry_script_tags('app') }} #}
-    {% endblock %}
 </head>
 <body>
-{% block body %}{% endblock %}
+<header>
+    <div>
+        <img src="{{ asset('uploads/images/site/logo-refuge.png') }}" alt="Logo du Re[fût]ge en noir">
+        <a href="{{ path('homepage') }}">
+            <p>Re[fût]ge</p>
+        </a>
+    </div>
+</header>
+{% block body %}
+{% endblock %}
+{% block javascripts %}
+    {# {{ encore_entry_script_tags('app') }} #}
+{% endblock %}
 </body>
 </html>

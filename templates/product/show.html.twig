@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+{{ product.name }} - Re[fût]ge
+{% endblock %}
+
 {% block body %}
     {% for message in app.flashes('alert') %}
         <div class="flash-notice">
@@ -11,9 +15,5 @@
     {{ form_row(cart_form.quantity) }}
     <button type="submit">Ajouter au panier</button>
     {{ form_end(cart_form) }}
-{% endblock %}
-
-{% block title %}
-
 {% endblock %}
 

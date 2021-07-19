@@ -37,7 +37,7 @@ class CartHasProduct
     private $quantity;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float", length=255)
      */
     private $amount;
 
@@ -107,12 +107,12 @@ class CartHasProduct
         return $this;
     }
 
-    public function getAmount(): ?string
+    public function getAmount(): ?float
     {
         return $this->amount;
     }
 
-    public function setAmount(string $amount): self
+    public function setAmount(float $amount): self
     {
         $this->amount = $amount;
 
