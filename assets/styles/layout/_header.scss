@@ -3,10 +3,11 @@ header {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 70px;
+  width: 100%;
   background-color: $secondary-regular;
-  padding: 0 2%;
   #home {
+    margin-left: 2%;
     width: 210px;
   }
   .header-container {
@@ -26,31 +27,46 @@ header {
         color: $primary-dark;
       }
       #home-logo {
-        height: 65px;
+        height: 50px;
       }
     }
     a {
       @include text("M");
       text-decoration: none;
       color: $primary-regular;
+      &:hover {
+        color: $primary-dark;
+      }
     }
   }
   nav{
-    width: 30%;
+    width: 40%;
   }
   #btn-container {
-    width: 300px;
+    margin-right: 2%;
+    width: 280px;
     p {
       margin-left: 10px;
     }
     .contact-btn {
       @include button("medium", "primary");
       @include alternatText("M");
-
+      &:hover {
+        @include effect("hover");
+      }
+      &:focus {
+        @include effect("inner");
+      }
     }
     .cart-btn {
       @include button("medium", "primary", "true");
       @include alternatText("M");
+      &:hover {
+        @include effect("hover");
+      }
+      &:focus {
+        @include effect("inner");
+      }
     }
   }
 }

@@ -2,6 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -44,7 +46,31 @@
 {% block body %}
 {% endblock %}
 <footer>
-
+    <div class="footer-container" id="footer-adresse">
+        <img src="{{ asset('uploads/images/site/logo-refuge.png') }}" alt="Logo du Re[fût]ge en noir" id="footer-logo">
+        <p>14 Rue du Refuge</p>
+        <p>13 002, Marseille</p>
+    </div>
+    <nav class="footer-container">
+        <div>
+            <a href="{{ path('homepage') }}">Accueil</a>
+            <a href="{{ path('about') }}">A Propos</a>
+        </div>
+        <div>
+            <a href="{{ path('shop') }}">Boutique</a>
+            <a href="{{ path('cart') }}">Panier </a>
+        </div>
+        <div>
+            <a href="#">Contact</a>
+            {% if is_granted("ROLE_ADMIN") %}
+                <a href="{{ path('admin') }}">Admin</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="footer-container" id="socials">
+        <a href="https://www.facebook.com/refutge" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/refutge" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
 </footer>
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}

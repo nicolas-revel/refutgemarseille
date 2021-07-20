@@ -1,0 +1,51 @@
+footer {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $secondary-regular;
+  .footer-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #footer-adresse {
+    margin-left: 2%;
+    flex-direction: column;
+    align-items: start;
+    img {
+      height: 40px;
+      margin-bottom: 5px;
+    }
+    p {
+      @include text("XXS");
+      margin-top: 5px;
+      color: $primary-regular;
+    }
+  }
+  nav {
+    width: 40%;
+    height: 50px;
+    div {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      a {
+        margin-bottom: 15px;
+        @include text("XS");
+        color: $primary-regular;
+      }
+    }
+  }
+  #socials {
+    margin-right: 2%;
+    width: 5%;
+    a {
+      @include text("XXL");
+      color: $primary-dark;
+    }
+  }
+}

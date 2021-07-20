@@ -46,6 +46,9 @@
   @else if($size == "XS") {
     font-size: 12px;
   }
+  @else if($size == "XXS") {
+    font-size: 9px;
+  }
 }
 
 @mixin alternatText($size) {
@@ -69,6 +72,9 @@
   }
   @else if($size == "XS") {
     font-size: 12px;
+  }
+  @else if($size == "XXS") {
+    font-size: 9px;
   }
 }
 
@@ -135,6 +141,7 @@
 }
 
 @mixin effect($type) {
+  transition: ease-in-out 100ms;
   @if ($type == "hover") {
     box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.25);
   } @else if ($type == "inner") {
