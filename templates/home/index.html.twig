@@ -38,10 +38,12 @@
                     {% include("components/_product_card.html.twig") %}
                 {% endfor %}
             </div>
-            <button class="btn--primary--medium">
-                <i class="fas fa-store"></i>
-                <p>Visiter le Shop</p>
-            </button>
+            <a href="{{ path('shop') }}">
+                <button class="btn--primary--medium">
+                    <i class="fas fa-store"></i>
+                    <p>Visiter le Shop</p>
+                </button>
+            </a>
         </section>
         <section class="home__about">
             <h2 class="h2">Pour mieux nous connaitre</h2>
