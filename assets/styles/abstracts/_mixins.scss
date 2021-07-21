@@ -49,6 +49,7 @@
   @else if($size == "XXS") {
     font-size: 9px;
   }
+  line-height: 1.5rem;
 }
 
 @mixin alternatText($size) {
@@ -97,7 +98,7 @@
     @if($color == "primary") {
       background-color: $primary-regular;
     } @else if($color == "secondary") {
-      background-color: $secondary-regular;
+      background-color: $secondary-dark;
     } @else if($color == "danger") {
       background-color: $danger-light;
     } @else if($color == "alert") {
@@ -112,7 +113,7 @@
       border: solid 2px $primary-light;
     } @else if($color == "secondary") {
       color: $secondary-darker;
-      border: solid 2px $secondary-regular;
+      border: solid 2px $secondary-dark;
     } @else if($color == "danger") {
       color: $danger-dark;
       border: solid 2px $danger-lighter;
@@ -123,6 +124,12 @@
       color: $success-dark;
       border: solid 2px $success-lighter;
     }
+  }
+  &:hover {
+    @include effect("hover");
+  }
+  &:focus{
+    @include effect("inner");
   }
 }
 

@@ -13,8 +13,12 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
+        $latestProduct = $this->getDoctrine()->getRepository("App:Product")->findLatestProcuct();
+        $preoderProduct = $this->getDoctrine()->getRepository("App:Product")->findPreorderProduct();
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+            "latestProduct" => $latestProduct,
+            "preorderProduct" => $preoderProduct,
         ]);
     }
 }

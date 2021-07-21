@@ -19,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 
 /**
  * Class DashboardController
@@ -44,6 +45,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems (): iterable
     {
         return [
+            MenuItem::linkToUrl("Accueil du site", "fa fa-home", $this->generateUrl("homepage", [], UrlGenerator::ABSOLUTE_URL)),
             MenuItem::section("Gestion utilisateurs", "fa fa-group"),
             MenuItem::linkToCrud("Utilisateurs", "fa fa-user", User::class),
             MenuItem::linkToCrud("Adresses", "fa fa-map", Adress::class),
@@ -55,7 +57,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud("Produits", "fa fa-beer", Product::class),
             MenuItem::linkToCrud("Commandes", "fa fa-truck", Order::class),
             MenuItem::linkToCrud("Catégories", "fa fa-sitemap", Category::class),
-            MenuItem::linkToCrud("Hashtags", "fa fa-hashtag", Tag::class)
+            MenuItem::linkToCrud("Tags", "fa fa-tag", Tag::class)
 
         ];
     }

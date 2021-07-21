@@ -1,0 +1,5 @@
+.h2 {
+  align-self: start;
+  margin: 30px 90px;
+  @include heading("h2", $primary-dark);
+}

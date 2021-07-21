@@ -22,6 +22,10 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    /**
+     * @param ProductSearch $search
+     * @return Query
+     */
     public function findAllFiltered (ProductSearch $search): Query
     {
         $query = $this->createQueryBuilder("p");
@@ -31,6 +35,9 @@ class ProductRepository extends ServiceEntityRepository
         }
         if ($search->getPreorder()) {
             $query->andWhere("p.releasedAt > :now")
+                ->setParameter(":now", new DateTime());
+        } else {
+            $query->andWhere("p.releasedAt <= :now")
                 ->setParameter(":now", new DateTime());
         }
         if ($search->getCategories()->getValues()) {
@@ -46,6 +53,36 @@ class ProductRepository extends ServiceEntityRepository
                 ->setParameter(":tags", $search->getTags());
         }
         return $query->getQuery();
+    }
+
+    /**
+     * @return int|mixed|string
+     */
+    public function findLatestProcuct ()
+    {
+        $query = $this->createQueryBuilder("p");
+        return $query
+            ->where("p.releasedAt < :now")
+            ->setParameter(":now", new DateTime())
+            ->orderBy("p.releasedAt", "DESC")
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return int|mixed|string
+     */
+    public function findPreorderProduct ()
+    {
+        $query = $this->createQueryBuilder("p");
+        return $query
+            ->where("p.releasedAt > :now")
+            ->setParameter(":now", new DateTime())
+            ->orderBy("p.releasedAt", "ASC")
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
     }
 
 }

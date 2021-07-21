@@ -3,5 +3,69 @@
 {% block title %}Accueil - Re[fût]ge{% endblock %}
 
 {% block body %}
-
+    <main>
+        <div class="hero">
+            <p class="hero__slogan">Des bières d'exception mises en fût à destination de connaisseurs ...</p>
+            <div class="hero__calltoaction">
+                <a href="{{ path('app_login') }}">
+                    <button class="btn--primary--medium">
+                        <i class="fas fa-user"></i>
+                        <p>Me Connecter</p>
+                    </button>
+                </a>
+                <a href="{{ path('shop') }}">
+                    <button class="btn--primary--medium">
+                        <i class="fas fa-store"></i>
+                        <p>Visiter le Shop</p>
+                    </button>
+                </a>
+            </div>
+            <a href="#heroproduct"
+               class="hero__scroller">
+                <i class="fas fa-arrow-down"></i>
+            </a>
+        </div>
+        <section id="heroproduct">
+            <h2 class="h2">Nos dernières nouveautés</h2>
+            <div class="home--product--container">
+                {% for product in latestProduct %}
+                    {% include("components/_product_card.html.twig") %}
+                {% endfor %}
+            </div>
+            <h2 class="h2">Nos prochains produits</h2>
+            <div class="home--product--container">
+                {% for product in preorderProduct %}
+                    {% include("components/_product_card.html.twig") %}
+                {% endfor %}
+            </div>
+            <button class="btn--primary--medium">
+                <i class="fas fa-store"></i>
+                <p>Visiter le Shop</p>
+            </button>
+        </section>
+        <section class="home__about">
+            <h2 class="h2">Pour mieux nous connaitre</h2>
+            <div class="home__about__container">
+                <div class="home__about__image"></div>
+                <div class="home__about__text__container">
+                    <p class="home__about__text">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquam aut beatae blanditiis
+                        consequuntur corporis delectus doloremque, dolorum eaque eligendi illo libero natus
+                        necessitatibus
+                        non omnis, quae reprehenderit suscipit vero.
+                    </p>
+                    <br>
+                    <p class="home__about__text">
+                        Accusantium alias aliquam amet at cumque debitis dicta dolore ducimus eius eligendi eum eveniet
+                        impedit,incidunt ipsum laboriosam magni maxime minus mollitia, necessitatibus numquam odit rem
+                        sunt
+                        ullam vel velit.
+                    </p>
+                </div>
+            </div>
+            <a href="{{ path('about') }}">
+                <button class="btn--primary--medium">A Propos</button>
+            </a>
+        </section>
+    </main>
 {% endblock %}

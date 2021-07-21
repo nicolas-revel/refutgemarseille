@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   width: 100%;
   display: flex;
@@ -6,6 +10,7 @@ body {
   justify-content: space-between;
   height: 100%;
   min-height: 100vh;
+  background-color: $gray-100;
 }
 
 a {
