@@ -1,0 +1,72 @@
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  width: 100%;
+  background-color: $secondary-regular;
+  #home {
+    margin-left: 2%;
+    width: 210px;
+  }
+  .header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    #home-link {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      #home-title {
+        @include text('XL');
+        padding-top: 10px;
+        color: $primary-dark;
+      }
+      #home-logo {
+        height: 50px;
+      }
+    }
+    a {
+      @include text("M");
+      text-decoration: none;
+      color: $primary-regular;
+      &:hover {
+        color: $primary-dark;
+      }
+    }
+  }
+  nav{
+    width: 40%;
+  }
+  #btn-container {
+    margin-right: 2%;
+    width: 280px;
+    p {
+      margin-left: 10px;
+    }
+    .contact-btn {
+      @include button("medium", "primary");
+      @include alternatText("M");
+      &:hover {
+        @include effect("hover");
+      }
+      &:focus {
+        @include effect("inner");
+      }
+    }
+    .cart-btn {
+      @include button("medium", "primary", "true");
+      @include alternatText("M");
+      &:hover {
+        @include effect("hover");
+      }
+      &:focus {
+        @include effect("inner");
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shop - Re[fût]ge{% endblock %}
+
+{% block body %}
+    <main id="main--shop">
+        <h1>Le shop</h1>
+        <h2>Bientôt disponible</h2>
+        <div>
+            {{ knp_pagination_sortable(products, "Prix", "p.price") }}
+            {{ knp_pagination_sortable(products, "Stocks", "p.stock") }}
+            {{ knp_pagination_sortable(products, "Nom", "p.name") }}
+            {{ knp_pagination_sortable(products, "Date de sortie", "p.releasedAt") }}
+            {{ form_start(form) }}
+            {{ form_row(form.query) }}
+            {{ form_row(form.categories) }}
+            {{ form_row(form.tags) }}
+            {{ form_row(form.preorder) }}
+            <button>Rechercher</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="shop__product__container">
+            {% for product in products %}
+                {% include("components/_product_card.html.twig") %}
+            {% endfor %}
+        </div>
+        {{ knp_pagination_render(products) }}
+    </main>
+{% endblock %}
