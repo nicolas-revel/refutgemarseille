@@ -1,0 +1,20 @@
+.btn {
+  &--primary {
+    &--medium {
+      @include button("medium", "secondary");
+      @include alternatText("L");
+      color: $gray-100;
+      p {
+        margin-left: 10px;
+      }
+    }
+    &--big {
+      @include button("big", "secondary");
+      @include alternatText("L");
+      color: $gray-100;
+      p {
+        margin-left: 10px;
+      }
+    }
+  }
+}

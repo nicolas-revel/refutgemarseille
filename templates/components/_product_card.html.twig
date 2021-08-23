@@ -1,0 +1,16 @@
+<div class="product">
+    <div class="product__image" style="background-image: url('{{ vich_uploader_asset(product, "image1File") }}');">
+</div>
+<div class="product__text">
+    <a href="{{ path('product_path', {slug: product.slug}) }}">
+        <p class="product__title">{{ product.name|u.truncate(25, "...") }}</p>
+    </a>
+    <p class="product__category">{{ product.category }}</p>
+    <div class="product__tags">
+        {% for tag in product.tags %}
+            <p class="product__tag">{{ tag }}</p>
+        {% endfor %}
+    </div>
+    <p class="product__price">{{ product.price|number_format(2, ",", " ") }} €</p>
+</div>
+</div>

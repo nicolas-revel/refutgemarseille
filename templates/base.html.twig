@@ -2,30 +2,95 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
     {% block stylesheets %}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-              crossorigin="anonymous">
-        {# {{ encore_entry_link_tags('app') }} #}
+        {{ encore_entry_link_tags('app') }}
+        <link rel="preconnect"
+              href="https://fonts.googleapis.com">
+        <link rel="preconnect"
+              href="https://fonts.gstatic.com"
+              crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cutive&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+              rel="stylesheet">
     {% endblock %}
-
 </head>
 <body>
 <header>
-    <div>
-        <img src="{{ asset('uploads/images/site/logo-refuge.png') }}" alt="Logo du Re[fût]ge en noir">
-        <a href="{{ path('homepage') }}">
-            <p>Re[fût]ge</p>
+    <div class="header-container"
+         id="home">
+        <a href="{{ path('homepage') }}"
+           id="home-link">
+            <img src="{{ asset('uploads/images/site/logo-refuge.png') }}"
+                 alt="Logo du Re[fût]ge en noir"
+                 id="home-logo">
+            <p id="home-title">Re[fût]ge</p>
+        </a>
+    </div>
+    <nav class="header-container"
+         id="nav">
+        <a href="{{ path('homepage') }}">Accueil</a>
+        <a href="{{ path('shop') }}">Boutique</a>
+        <a href="{{ path('about') }}">A Propos</a>
+    </nav>
+    <div class="header-container"
+         id="btn-container">
+        <a href="{{ path('app_login') }}">
+            <button class="contact-btn">
+                <i class="fas fa-user"></i>
+                <p>Compte</p>
+            </button>
+        </a>
+        <a href="{{ path('cart') }}">
+            <button class="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Panier</p>
+            </button>
         </a>
     </div>
 </header>
 {% block body %}
 {% endblock %}
+<footer>
+    <div class="footer-container"
+         id="footer-adresse">
+        <img src="{{ asset('uploads/images/site/logo-refuge.png') }}"
+             alt="Logo du Re[fût]ge en noir"
+             id="footer-logo">
+        <p>14 Rue du Refuge</p>
+        <p>13 002, Marseille</p>
+    </div>
+    <nav class="footer-container">
+        <div>
+            <a href="{{ path('homepage') }}">Accueil</a>
+            <a href="{{ path('about') }}">A Propos</a>
+        </div>
+        <div>
+            <a href="{{ path('shop') }}">Boutique</a>
+            <a href="{{ path('cart') }}">Panier </a>
+        </div>
+        <div>
+            <a href="#">Contact</a>
+            {% if is_granted("ROLE_ADMIN") %}
+                <a href="{{ path('admin') }}">Admin</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="footer-container"
+         id="socials">
+        <a href="https://www.facebook.com/refutge"
+           target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/refutge"
+           target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+</footer>
 {% block javascripts %}
-    {# {{ encore_entry_script_tags('app') }} #}
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}
 </body>
 </html>

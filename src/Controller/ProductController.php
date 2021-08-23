@@ -33,7 +33,7 @@ class ProductController extends AbstractController
         $products = $paginator->paginate(
             $this->getDoctrine()->getRepository("App:Product")->findAllFiltered($search),
             $request->query->getInt("page", 1),
-            20
+            12
         );
         return $this->render('product/shop.html.twig', [
             'controller_name' => 'ProductController',
